@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
@@ -50,8 +49,8 @@ public class FlappyBird extends ApplicationAdapter {
     private final float VIRTUAL_HEIGTH = 1024;
 
     //largura e altura da tela
-    private int larguraDispositivo;
-    private int alturaDispositivo;
+    private float larguraDispositivo;
+    private float alturaDispositivo;
     private int estadoJogo = 0;// aqui quando estado for 0 não inicia quando for 1 inicia
     private int pontuacao = 0;
 
@@ -84,10 +83,12 @@ public class FlappyBird extends ApplicationAdapter {
 
         //Configuração da Camera
         camera = new OrthographicCamera();
+        camera.position.set(VIRTUAL_WIDTH / 2, VIRTUAL_HEIGTH / 2,0);
+
         viewport = new StretchViewport(VIRTUAL_WIDTH, VIRTUAL_HEIGTH, camera);
 
-        larguraDispositivo = Gdx.graphics.getWidth();
-        alturaDispositivo = Gdx.graphics.getHeight();
+        larguraDispositivo = VIRTUAL_WIDTH;
+        alturaDispositivo = VIRTUAL_HEIGTH;
 
         posicaoInicialVertical = alturaDispositivo / 2;
         posicaoMovimentoHorizontal = larguraDispositivo;
@@ -143,6 +144,8 @@ public class FlappyBird extends ApplicationAdapter {
             }
         }
 
+        // Configurar dados de projeto da camera
+        batch.setProjectionMatrix(camera.combined);
 
         batch.begin();
 
